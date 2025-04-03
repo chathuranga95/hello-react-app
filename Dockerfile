@@ -21,6 +21,12 @@
     
     # Set working directory
     WORKDIR /app
+
+    # Create a non-root user with a UID in the range 10000-20000
+    RUN addgroup -S appgroup && adduser -S -u 10001 -G appgroup appuser
+
+    # Switch to the non-root user
+    USER 10001
     
     # Copy only the necessary files from the build stage
     COPY --from=builder /app/package.json ./
